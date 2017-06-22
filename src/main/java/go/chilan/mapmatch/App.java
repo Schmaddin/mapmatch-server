@@ -13,6 +13,7 @@ public class App
     {	
     	while(true){
     		try{
+    			MapMatch.init();
         Server server=new Server(Constants.PORT_MAP_MATCH);
     		}catch(Exception e){
     			System.out.println("error "+e.getMessage());

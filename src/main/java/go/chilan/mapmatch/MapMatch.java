@@ -70,4 +70,8 @@ public class MapMatch {
 
 		return output;
 	}
+
+	public static void init() {
+		
+	}
 }
