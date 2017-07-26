@@ -11,6 +11,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
+import javax.net.ssl.SSLServerSocket;
+import javax.net.ssl.SSLServerSocketFactory;
+
 import com.graphhopper.chilango.data.MapMatchMessage;
 import com.graphhopper.chilango.data.gps.GPSPoint;
 import com.graphhopper.util.DistanceCalcEarth;
@@ -21,6 +24,9 @@ public class Server {
 
 		do {
 			try (ServerSocket serverSocket = new ServerSocket(port); Socket socket = serverSocket.accept()) {
+	//		try (ServerSocket serverSocket = (SSLServerSocket) SSLServerSocketFactory
+	//                 .getDefault().createServerSocket(port); Socket socket = serverSocket.accept();) {
+				
 				System.out.println("Server accepted Client");
 				ObjectInputStream ois;
 				ObjectOutputStream ous;
@@ -138,3 +144,4 @@ public class Server {
 	}
 
 }
+
