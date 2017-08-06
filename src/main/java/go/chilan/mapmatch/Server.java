@@ -23,27 +23,25 @@ public class Server {
 	public Server(int port) {
 
 		do {
-			try (ServerSocket serverSocket = new ServerSocket(port); Socket socket = serverSocket.accept()) {
+			try (ServerSocket serverSocket = new ServerSocket(port); Socket socket = serverSocket.accept();ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());ObjectOutputStream ous = new ObjectOutputStream(socket.getOutputStream());) {
 	//		try (ServerSocket serverSocket = (SSLServerSocket) SSLServerSocketFactory
 	//                 .getDefault().createServerSocket(port); Socket socket = serverSocket.accept();) {
 				
 				System.out.println("Server accepted Client");
-				ObjectInputStream ois;
-				ObjectOutputStream ous;
 
 				MapMatchMessage message = null;
 
+				
+				
 				do {
-					ois = new ObjectInputStream(socket.getInputStream());
-					ous = new ObjectOutputStream(socket.getOutputStream());
+
 					// data
 					message = (MapMatchMessage) ois.readObject();
-					System.out.println("message received");
+					System.out.println("message received: "+ message.getMessageType());
 
 					if (message.getMessageType() == 2) {
-						ois.close();
-						socket.close();
 
+						System.out.println("close connection");
 					} else if (message.getMessageType() == 1) {
 
 						MapMatchMessage returnMessage = processMessage(message);
@@ -60,7 +58,7 @@ public class Server {
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			} 
 		} while (true);
 	}
 
